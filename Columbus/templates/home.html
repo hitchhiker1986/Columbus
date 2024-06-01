@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_navbar %}
+
+{% endblock body_navbar %}
+{% block body_content %}
+    <div class="main_div" id="content">
+    </div>
+    {% block body_tasks %}
+        <div class="main_div" id="tasks">
+        </div>
+    {% endblock body_tasks %}
+
+{% endblock body_content %}

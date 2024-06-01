@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            {{ form|crispy }}
+            <!--<button id="add_next">[+]</button> <br>-->
+        </div>
+
+        <input type="submit" value="Feladat aktualizálása">
+    </form>
+{% endblock content %}

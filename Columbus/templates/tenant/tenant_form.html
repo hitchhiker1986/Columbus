@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            {{ form|crispy }}
+        </div>
+
+        <input type="submit" value="Bérlö aktualizálása">
+    </form>
+{% endblock content %}
