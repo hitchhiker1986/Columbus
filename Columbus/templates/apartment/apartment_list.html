@@ -6,13 +6,13 @@
 {% if request.user.is_anonymous %}
 <span>You are not logged in!</span>
 {% endif %}
-<h2 class="content-header">Apartments:</h2>
+<h2 class="content-header">Lakások:</h2>
 {% if request.user.is_staff %}
 <table>
     <tr>
-        <td>cim</td>
-        <td>Tulaj(ok)</td>
-        <td>Berlo(k)</td>
+        <th>cim</th>
+        <th>Tulaj(ok)</th>
+        <th>Bérlő(k)</th>
     </tr>
     {% for apartment in apartments %}
     <tr>

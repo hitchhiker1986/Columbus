@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<a href="/tenant_create">Új bérlö hozzáadása</a>
-<h2>Bérlök:</h2>
+<a href="/tenant_create">Új bérlő hozzáadása</a>
+<h2>Bérlők:</h2>
 
 {% for tenant in tenants %}
     <a href="/tenant_show/{{ tenant.id }}">{{tenant}}</a>
