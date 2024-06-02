@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<h2>Tenants:</h2>
+
+{% for tenant in tenants %}
+    <span>{{tenant}}</span>
+
+{% endfor %}
+{% endblock content %}

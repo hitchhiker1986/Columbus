@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block submenu %}
+    <a href="../apartment/apartment_show">Létrehozás</a>
+{% endblock submenu %}
+{% block content %}
+{% if request.user.is_anonymous %}
+<span>You are not logged in!</span>
+{% endif %}
+<h2 class="content-header">Apartments:</h2>
+{% if request.user.is_staff %}
+<table>
+    <tr>
+        <td>cim</td>
+        <td>Tulaj(ok)</td>
+        <td>Berlo(k)</td>
+    </tr>
+    {% for apartment in apartments %}
+    <tr>
+        <td><a href="../apartment/{{ apartment.id }}">{{apartment.address}}</a></td>
+        <td>
+            {% for owner in apartment.owner.all %}
+            <a href="../owner/owner_modify/{{ owner.id }}">{{owner}}</a>
+            {% endfor %}
+        </td>
+        <td>
+            {% for tenant in apartment.tenant.all %}
+            <a href="../tenant/tenant_show_and_modify/{{tenant.id}}">{{tenant}}</a><br>
+            {% endfor %}
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+
+{% endif %}
+
+{% endblock content %}

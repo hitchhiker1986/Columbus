@@ -103,7 +103,7 @@ def owner_list(request):
         for owner in owners:
             print(owner.user)
 
-    return render(request, "owner_list.html", {'owners': owners})
+    return render(request, "owner/owner_list.html", {'owners': owners})
 
 
 @login_required
@@ -135,7 +135,7 @@ def tenant_list(request):
     for tenant in tenants:
         print(tenant.user.username)
 
-    return render(request, 'tenant_list.html', {'tenants': tenants})
+    return render(request, 'tenant/tenant_list.html', {'tenants': tenants})
 
 
 @login_required
