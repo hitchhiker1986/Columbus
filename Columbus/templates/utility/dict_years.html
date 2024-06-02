@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<table>
+    <tr>
+        {% for year in years %}
+           <td> <a href="#" onclick="loadHTML('../dict_list/{{ year }}', 'dict_list');">{{ year }}</a></td>
+        {% endfor %}
+    </tr>
+</table>
+<div id="dict_list"></div>
+{% endblock content %}

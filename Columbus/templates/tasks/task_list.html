@@ -5,17 +5,17 @@
 <span>You are not logged in!</span>
 {% endif %}
 <h2>Feladatok:</h2>
-    <a href="create_task/">Új feladat létrehozása</a>
+    <a href="/task_create/">Új feladat létrehozása</a>
 <hr>
-{% for todo in todos %}
-    <a href="todo_form/{{ todo.id }}">
-    <div class="todo_element">
-        <div class="todo_title">
-            <span>{{ todo.title }}</span><br>
+{% for task in tasks %}
+    <a href="task_show/{{ task.id }}">
+    <div class="task_element">
+        <div class="task_title">
+            <span>{{ task.title }}</span><br>
         </div>
-        <span>{{ todo.description }}</span><br>
-        <span>Felelös: {{ todo.task_responsible }}</span> <br>
-        <span>Határidö: {{ todo.end_day }}</span>
+        <span>{{ task.description }}</span><br>
+        <span>Felelös: {{ task.task_responsible }}</span> <br>
+        <span>Határidö: {{ task.end_day }}</span>
     </div></a>
 {% endfor %}
 {% endblock body_tasks %}

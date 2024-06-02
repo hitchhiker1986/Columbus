@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="dict_table">
+    <tr class="dict_table_head">
+        <th>Serial</th>
+        <th>Januar</th>
+        <th>Februar</th>
+        <th>Marcius</th>
+        <th>Aprilis</th>
+        <th>Majus</th>
+        <th>Junius</th>
+        <th>Julius</th>
+        <th>Augusztus</th>
+        <th>Szeptember</th>
+        <th>Oktober</th>
+        <th>November</th>
+        <th>December</th>
+    </tr>
+    {%  for dict in dicts %}
+        <tr>
+            <td>{{ dict.serial }}</td>
+
+            {% for i in "x"|ljust:"12" %}
+                <td>
+                {% for entry in dict.arr %}
+                    {% if entry.month == forloop.parentloop.counter %}
+                        {{ entry.value }}
+                    {% endif %}
+                {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

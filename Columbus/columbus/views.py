@@ -206,7 +206,7 @@ def dict_view(request, pk_id):
                 {"papp.l@icloud.com"},
             )
             email.send()
-            return HttpResponseRedirect("/test/")
+            return HttpResponseRedirect("/home/")
 
         else:
             for error in form.errors:
@@ -214,10 +214,75 @@ def dict_view(request, pk_id):
             form = DictForm()
     else:
         form = DictForm(request.POST)
-    return render(request, 'dict.html', {'form': form})
+    return render(request, 'utility/dict_form.html', {'form': form})
+
+
+@login_required
+def dict_years(request):
+    dict_history = DictHistory.objects.all().values()
+    years = []
+    for dh in dict_history:
+        years.append(dh['dict_date'].year)
+
+    years = list(dict.fromkeys(years))
+
+    return render(request, "utility/dict_years.html", {"years": years})
+
+
+@login_required
+def dict_list(request, year):
+    dict_history = DictHistory.objects.filter(dict_date__year=year)
+    dict_history = dict_history.order_by('utility_serial').values()
+    serials = dict_history.values('utility_serial').distinct()
+
+    dicts = []
+    for serial in serials:
+        arr = []
+        for dh in dict_history:
+            if dh['utility_serial'] == serial['utility_serial']:
+                arr.append({'value': dh['dict_value'], 'month': dh['dict_date'].month})
+
+        util = {'serial': serial['utility_serial'], 'arr': arr}
+
+        dicts.append(util)
+
+    return render(request, "utility/dict_list.html", {"dicts": dicts})
 
 
 
 """
 Views related to Task(s)
 """
+
+@login_required
+def task_list(request):
+    if request.user.is_superuser:
+        tasks = Task.objects.all()
+    else:
+        tasks = Task.objects.filter(task_responsible=request.user)
+    return render(request, "tasks/task_list.html", {"tasks": tasks})
+
+
+@login_required
+def task_show_and_modify(request, pk_id):
+    task = Task.objects.get(pk=int(pk_id))
+    form = TaskForm(request.POST, instance=task)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_task = form.save(commit=False)
+            new_task.save()
+            #email().send
+    else:
+        form = TaskForm(instance=task)
+
+    return render(request, 'tasks/task_form.html', {'form': form})
+
+
+@login_required
+def task_create(request):
+    form = TaskForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_task = form.save(commit=False)
+            new_task.save()
+    return render(request, 'tasks/task_form.html', {'form': form})
