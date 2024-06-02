@@ -16,15 +16,15 @@
     </tr>
     {% for apartment in apartments %}
     <tr>
-        <td><a href="/apartment_show/{{ apartment.id }}">{{apartment.address}}</a></td>
+        <td><a href="/apartment_show/{{ apartment.id }}">{{ apartment.address }}</a></td>
         <td>
             {% for owner in apartment.owner.all %}
-            <a href="/owner_show/{{ owner.id }}">{{owner}}</a>
+            <a href="/owner_show/{{ owner.id }}">{{ owner }}</a>
             {% endfor %}
         </td>
         <td>
             {% for tenant in apartment.tenant.all %}
-            <a href="/tenant_show/{{tenant.id}}">{{tenant}}</a><br>
+            <a href="/tenant_show/{{ tenant.id }}">{{ tenant }}</a><br>
             {% endfor %}
         </td>
     </tr>
