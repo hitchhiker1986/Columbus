@@ -52,6 +52,17 @@ def apartment_show_and_modify(request, apt_id):
     return render(request, 'apartment/apartment_form.html', {'form': form})
 
 
+@login_required
+def apartment_create(request):
+    form = ApartmentForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_apartment = form.save(commit=False)
+            new_apartment.save()
+            # email().send
+
+    return render(request, 'apartment/apartment_form.html', {'form': form})
+
 def apartment_checkform(request, apt_id):
     apartment = Apartment.objects.get(id=apt_id)
     form = CheckForm(request.POST)
@@ -118,6 +129,18 @@ def owner_show_and_modify(request, owner_id):
             #email().send
 
     return render(request, 'owner/owner_form.html', {'form': form})
+
+
+@login_required
+def owner_create(request):
+    form = OwnerForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_owner = form.save(commit=False)
+            new_owner.save()
+            #email().send
+
+    return render(request, 'owner/owner_form.html', {'form': form})
 """
 Views related to Tenant(s)
 """
@@ -151,6 +174,15 @@ def tenant_show_and_modify(request, tenant_id):
     return render(request, 'tenant/tenant_form.html', {'form': form})
 
 
+@login_required
+def tenant_create(request):
+    form = TenantForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_tenant = form.save(commit=False)
+            new_tenant.save()
+
+    return render(request, 'tenant/tenant_form.html', {'form': form})
 """
 Views related to Utilities(s)
 """
