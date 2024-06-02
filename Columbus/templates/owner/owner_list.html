@@ -3,7 +3,7 @@
 <a href="/owner_create">Új tulaj hozzáadása</a>
 <h2>Owners:</h2>
 {% for owner in owners %}
-    <span>{{ owner }}</span>
+    <a href="/owner_show/{{ owner.id }}">{{ owner }}</a>
 {% endfor %}
 
 {% endblock content %}

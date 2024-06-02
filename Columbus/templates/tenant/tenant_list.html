@@ -5,7 +5,7 @@
 <h2>Bérlök:</h2>
 
 {% for tenant in tenants %}
-    <span>{{tenant}}</span>
+    <a href="/tenant_show/{{ tenant.id }}">{{tenant}}</a>
 
 {% endfor %}
 {% endblock content %}
