@@ -1,3 +1,7 @@
+{% if request.user.is_anonymous %}
+<span>You are not logged in!</span>
+{% endif %}
+
 <form action="" method="POST">
    {% csrf_token %}
    {{ form }}

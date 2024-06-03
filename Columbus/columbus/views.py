@@ -241,10 +241,10 @@ def utility_show_and_modify(request, util_id):
     return render(request, 'utility/utility_form.html', {'form': form})
 
 @login_required
-def dict_view(request, pk_id):
+def dict_view(request, util_id):
     if request.method == 'POST':
-        utility = Utility.objects.get(id=pk_id)
-        form = dict_form(request.POST, instance=utility)
+        utility = Utility.objects.get(id=util_id)
+        form = DictForm(request.POST, instance=utility)
         if form.is_valid():
             form.save()
             utility.set_current(request.POST['current'])

@@ -1,12 +1,12 @@
 import os
 
 from django.core.management.base import BaseCommand, CommandError
-from rem.models import *
+from columbus.models import *
 from django.core.mail import EmailMessage
 from django.core.mail import get_connection
 import datetime
 
-from rem.models import Utility, ToDo
+#from columbus.models import Utility, Task
 
 
 def calcStart(x):
@@ -39,12 +39,12 @@ class Command(BaseCommand):
                 next_check_end_date = datetime.date(y, m, utility.dict_end_day)
 
             if (datetime.date.today() - next_check_start_date).days <= 5:
-                task = ToDo()
+                task = Task()
                 task.start_day = next_check_start_date
                 task.end_day = next_check_end_date
-                task.description = str(Utility.serial) + " sorozatszámú fogyasztásmérö óraállásának diktálása. Esedékes " + str(next_check_end_date) + " dátumig!"
+                task.description = str(utility.serial) + " sorozatszámú fogyasztásmérö óraállásának diktálása. Esedékes " + str(next_check_end_date) + " dátumig!" + "A Diktálást a <a href='http://46.29.138.72/dict/" + str(utility.id) + "'</a> linkre kattintva tudja elvégezni!"
                 task.title = "Diktálás " + str(utility.serial)
-                task.responsible = utility.util_responsible
+                task.task_responsible = utility.util_responsible
 
                 task.save()
 
@@ -53,7 +53,7 @@ class Command(BaseCommand):
                 task.title,
                 task.description,
                 User.objects.get(username="admin").email,
-                {task.responsible.email},
+                {task.task_responsible.email},
                 )
 
                 email.send()

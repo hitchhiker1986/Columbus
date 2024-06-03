@@ -1,12 +1,12 @@
 import os
 
 from django.core.management.base import BaseCommand, CommandError
-from rem.models import *
+from columbus.models import *
 from django.core.mail import EmailMessage
 from django.core.mail import get_connection
 import datetime
 
-from rem.models import Apartment
+from columbus.models import Apartment
 
 class Command(BaseCommand):
 
@@ -30,7 +30,7 @@ class Command(BaseCommand):
             if not apartment.check_status:
                 apartment.next_check = 1
 
-            t = ToDo()
+            t = Task()
             t.start_day = datetime.date.today() + datetime.timedelta(days=+apartment.next_check*30)
             t.end_day = t.start_day + datetime.timedelta(days=+5)
             t.task_responsible = User.objects.get(username="admin")
@@ -42,21 +42,21 @@ class Command(BaseCommand):
                 t.title,
                 t.description,
                 User.objects.get(username="admin").email,
-                {t.responsible.email},
+                {t.task_responsible.email},
             )
 
             email.send()
 
 
         else:
-            t = ToDo()
+            t = Task()
             t.start_day = 10
             t.end_day = 15
             t.description = "This is a new test task"
             t.title = "Test Task #5"
             t.responsible = User.objects.get(username="laszlo")
             t.save()
-            print(t.responsible.email)
+            print(t.task_responsible.email)
             print(User.objects.get(username="admin").email)
             email = EmailMessage(
                 t.title,
