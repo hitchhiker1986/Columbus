@@ -49,3 +49,16 @@ table {
     }
 
 }
+
+form {
+    width: 50%;
+}
+
+.task_element {
+    width: 20%;
+}
+.task_title {
+    background-color: #000d33;
+    color: white;
+
+}

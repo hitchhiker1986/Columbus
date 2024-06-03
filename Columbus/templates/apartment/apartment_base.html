@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 {% block submenu %}
         <a href="/apartment_utils/{{ apartment.id }}">Mérőórák</a>
         <a href="/apartment_documents/{{ apartment.id }}">Dokumentumok</a>
         <a href="/apartment_check/{{ apartment.id }}">Állapotfelmérés</a>
 {% endblock submenu %}
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
         <div>
-            {{ form|crispy }}
-        </div>
+        <a href="/apartment_create">Új bérlemény hozzáadása</a>
+        <a href="/apartment_details/{{ apartment.id }}">Alapadatok</a>
 
-        <input type="submit" value="Bérlemény aktualizálása">
-    </form>
+
+        <a href="/apartment_history/{{ apartment.id }}">Előzmények</a>
+    </div>
 {% endblock content %}

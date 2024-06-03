@@ -5,7 +5,7 @@
 <h2>Bérlők:</h2>
 
 {% for tenant in tenants %}
-    <a href="/tenant_show/{{ tenant.id }}">{{tenant}}</a>
+    <a href="/tenant_show/{{ tenant.id }}">{{tenant}}</a><br/>
 
 {% endfor %}
 {% endblock content %}

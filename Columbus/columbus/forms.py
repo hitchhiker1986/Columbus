@@ -43,7 +43,19 @@ class ApartmentForm(forms.ModelForm):
         fields = ('__all__')
 
 
+class ApartmentBaseDetailsForm(forms.ModelForm):
+    class Meta:
+        model = Apartment
+        fields = ('address', 'zip', 'city', 'district', 'topographical_nr', 'floor', 'size', 'rooms', 'halfrooms', 'balcony_size', 'furnished', 'is_active')
+
+
 class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
+        fields = ('__all__')
+
+
+class UtilityForm(forms.ModelForm):
+    class Meta:
+        model=Utility
         fields = ('__all__')

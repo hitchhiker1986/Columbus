@@ -39,6 +39,25 @@ def apartment_list(request):
 
 
 @login_required
+def apartment_details(request, apt_id):
+    apartment = Apartment.objects.get(pk=apt_id)
+    form = ApartmentBaseDetailsForm(instance=apartment)
+    if request.method == 'POST':
+        form = ApartmentBaseDetailsForm(request.POST, instance=apartment)
+        if form.is_valid():
+            new_apartment = form.save(commit=False)
+            new_apartment.save()
+
+    return render(request, 'apartment/apartment_form.html', {'form': form})
+
+
+@login_required
+def apartment_base_view(request, apt_id):
+    apartment = Apartment.objects.get(pk=apt_id)
+
+    return render(request, 'apartment/apartment_base.html', {'apartment': apartment})
+
+@login_required
 def apartment_show_and_modify(request, apt_id):
     apartment = Apartment.objects.get(pk=int(apt_id))
     form = ApartmentForm(instance=apartment)
@@ -59,6 +78,7 @@ def apartment_create(request):
         if form.is_valid():
             new_apartment = form.save(commit=False)
             new_apartment.save()
+            return HttpResponseRedirect("/apartment_list")
             # email().send
 
     return render(request, 'apartment/apartment_form.html', {'form': form})
@@ -138,6 +158,7 @@ def owner_create(request):
         if form.is_valid():
             new_owner = form.save(commit=False)
             new_owner.save()
+            return HttpResponseRedirect("/owner_list")
             #email().send
 
     return render(request, 'owner/owner_form.html', {'form': form})
@@ -170,6 +191,7 @@ def tenant_show_and_modify(request, tenant_id):
         if form.is_valid():
             new_tenant = form.save(commit=False)
             new_tenant.save()
+            return HttpResponseRedirect("/tenant_list")
 
     return render(request, 'tenant/tenant_form.html', {'form': form})
 
@@ -181,12 +203,44 @@ def tenant_create(request):
         if form.is_valid():
             new_tenant = form.save(commit=False)
             new_tenant.save()
+            return HttpResponseRedirect("/tenant_list")
 
     return render(request, 'tenant/tenant_form.html', {'form': form})
 """
 Views related to Utilities(s)
 """
+@login_required
+def utility_create(request):
+    form = UtilityForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_utility = form.save(commit=False)
+            new_utility.save()
+            return HttpResponseRedirect("/utility_list")
 
+    return render(request, 'utility/utility_form.html', {'form': form})
+
+
+@login_required
+def utility_list(request):
+    utils = Utility.objects.all()
+    return render(request, 'utility/utility_list.html', {'utils': utils})
+
+
+@login_required
+def utility_show_and_modify(request, util_id):
+    utility = Utility.objects.get(pk=util_id)
+    form = UtilityForm(instance=utility)
+    if request.method == 'POST':
+        form = UtilityForm(request.POST, instance=utility)
+        if form.is_valid():
+            new_utility = form.save(commit=False)
+            new_utility.save()
+            return HttpResponseRedirect("/utility_list")
+
+    return render(request, 'utility/utility_form.html', {'form': form})
+
+@login_required
 def dict_view(request, pk_id):
     if request.method == 'POST':
         utility = Utility.objects.get(id=pk_id)
@@ -264,8 +318,8 @@ def task_list(request):
 
 
 @login_required
-def task_show_and_modify(request, pk_id):
-    task = Task.objects.get(pk=int(pk_id))
+def task_show_and_modify(request, task_id):
+    task = Task.objects.get(pk=int(task_id))
     form = TaskForm(request.POST, instance=task)
     if request.method == 'POST':
         if form.is_valid():

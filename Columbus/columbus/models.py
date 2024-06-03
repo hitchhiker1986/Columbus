@@ -37,7 +37,7 @@ class Tenant(models.Model):
     active_tenant = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.user.last_name + " " + self.user.first_name
+        return self.birth_name
 
 
 class Apartment(models.Model):

@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+{% block content %}
+    <a href="/utility_create">Új mérőóra hozzáadása</a>
+    <table>
+        <tr>
+            <th>Sorozatszám</th>
+            <th>Cím</th>
+            <th>Szolgáltató</th>
+        </tr>
+        {% for util in utils %}
+            <tr>
+                <td><a href="/utility_show/{{ util.id}}">{{ util.serial }}</a></td>
+                <td> {{ util.apartment }}</td>
+                <td> {{ util.provider }}</td>
+            </tr>
+
+    {% endfor %}
+
+    </table>
+{% endblock content %}
