@@ -250,7 +250,7 @@ def dict_view(request, util_id):
             utility.set_current(request.POST['current'])
             utility.save()
             dh = DictHistory()
-            dh.update_serial(utility.get_serial())
+            dh.utility_serial = utility.serial
             dh.dict_value = request.POST['current']
             dh.save()
             email = EmailMessage(
