@@ -52,7 +52,7 @@ class Apartment(models.Model):
     size = models.IntegerField(blank=False, default=0)
     rooms = models.IntegerField(blank=False, default=1)
     halfrooms = models.IntegerField(blank=False, default=0)
-    balcony_size = models.FloatField(blank=False, default=0.0)
+    balcony_size = models.CharField(blank=False, default="0", max_length=20)
     furnished = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     price = models.PositiveIntegerField(default=0)
@@ -147,6 +147,7 @@ class CheckHistory(models.Model):
 
 
 class Task(models.Model):
+    #kész status -> csak akkor lehet completed ha Szilvi leokézta
     class Status(models.TextChoices):
         PENDING = "Pending"
         ACTIVE = "Active"
