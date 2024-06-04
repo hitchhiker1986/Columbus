@@ -310,10 +310,14 @@ Views related to Task(s)
 
 @login_required
 def task_list(request):
+    active = expired = in_progress = []
     if request.user.is_superuser:
         tasks = Task.objects.all()
     else:
         tasks = Task.objects.filter(task_responsible=request.user)
+
+
+
     return render(request, "tasks/task_list.html", {"tasks": tasks})
 
 

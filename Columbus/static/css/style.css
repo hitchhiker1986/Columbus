@@ -74,8 +74,8 @@ form {
 
 }
 
-#task_list {
-    float: left;
+.task_container {
+    padding: 20px;
     a:link {
         color: black;
         text-decoration: none;
@@ -95,4 +95,8 @@ form {
         color: black;
         text-decoration: none;
     }
+}
+
+.task_child {
+    float: left;
 }
