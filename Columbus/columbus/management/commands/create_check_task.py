@@ -62,7 +62,7 @@ class Command(BaseCommand):
                 t.title,
                 t.description,
                 User.objects.get(username="admin").email,
-                {t.responsible.email},
+                {t.task_responsible.email},
             )
 
             email.send()

@@ -149,6 +149,7 @@ class CheckHistory(models.Model):
 class Task(models.Model):
     class Status(models.TextChoices):
         PENDING = "Pending"
+        ACTIVE = "Active"
         IN_PROGRESS = "In Progress"
         COMPLETED = "Completed"
         EXPIRED = "Expired"

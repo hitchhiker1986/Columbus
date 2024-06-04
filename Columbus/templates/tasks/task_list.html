@@ -8,14 +8,17 @@
     <a href="/task_create/">Új feladat létrehozása</a>
 <hr>
 {% for task in tasks %}
-    <a href="/task_show/{{ task.id }}">
-    <div class="task_element">
-        <div class="task_title">
-            <span>{{ task.title }} {{ task.status }}</span><br>
-        </div>
-        <span>{{ task.description }}</span><br>
-        <span>Felelös: {{ task.task_responsible }}</span> <br>
-        <span>Határidö: {{ task.end_day }}</span>
-    </div></a>
+    <div id="task_list">
+        <a href="/task_show/{{ task.id }}">
+            <div class="task_element">
+                <div class="task_title">
+                    <span>{{ task.title }} {{ task.status }}</span><br>
+                </div>
+                <span>{{ task.description }}</span><br>
+                <span>Felelös: {{ task.task_responsible }}</span> <br>
+                <span>Határidö: {{ task.end_day }}</span>
+            </div></a>
+    </div>
+
 {% endfor %}
 {% endblock body_tasks %}
