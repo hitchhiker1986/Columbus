@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -328,6 +329,13 @@ def task_show_and_modify(request, task_id):
     if request.method == 'POST':
         if form.is_valid():
             new_task = form.save(commit=False)
+            if not request.user.is_superuser:
+                if form.cleaned_data['status'] == 'Closed':
+                    raise PermissionDenied()
+                    form = TaskForm(instance=new_task)
+            if form.cleaned_data['status'] == 'Completed':
+                admin = User.objects.get(username='columbusadmin')
+                new_task.task_responsible = admin
             new_task.save()
             #email().send
     else:

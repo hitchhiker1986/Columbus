@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 class Owner(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, )
     name = models.CharField(max_length=50, default="")
     country = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
@@ -32,7 +33,6 @@ class Tenant(models.Model):
     birth_name = models.CharField(max_length=50)
     persID = models.CharField(max_length=20)
     taxID = models.CharField(max_length=15)
-    iban = models.CharField(max_length=40)
     is_company = models.BooleanField(default=False)
     active_tenant = models.BooleanField(default=True)
 
@@ -153,6 +153,7 @@ class Task(models.Model):
         ACTIVE = "Active"
         IN_PROGRESS = "In Progress"
         COMPLETED = "Completed"
+        CLOSED = "Closed"
         EXPIRED = "Expired"
     # status ami alapjan kiertekelodik hogy kihez milyen gyakran kell menni (problemas-e)
     start_day = models.DateField()
