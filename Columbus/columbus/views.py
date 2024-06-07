@@ -7,6 +7,8 @@ from .forms import *
 from django.core.mail import EmailMessage
 from django.core import management
 from datetime import datetime
+from django.contrib.auth import logout
+from django.views.generic import FormView
 
 # Create your views here.
 
@@ -16,6 +18,11 @@ Views for non-functional pages, like home, thanks etc
 @login_required
 def home(request):
     return render(request, 'home.html')
+
+def logout(request):
+    logout(request)
+
+    return redirect('/accounts/login')
 
 def thanks(request):
     return render(request, 'thanks.html')
@@ -39,6 +46,7 @@ def apartment_list(request):
     return render(request, 'apartment/apartment_list.html', {'apartments': apartments})
 
 
+"""
 @login_required
 def apartment_details(request, apt_id):
     apartment = Apartment.objects.get(pk=apt_id)
@@ -57,9 +65,9 @@ def apartment_base_view(request, apt_id):
     apartment = Apartment.objects.get(pk=apt_id)
 
     return render(request, 'apartment/apartment_base.html', {'apartment': apartment})
-
+"""
 @login_required
-def apartment_show_and_modify(request, apt_id):
+def apartment_show_and_modify_old(request, apt_id):
     apartment = Apartment.objects.get(pk=int(apt_id))
     form = ApartmentForm(instance=apartment)
     if request.method == 'POST':
@@ -70,6 +78,14 @@ def apartment_show_and_modify(request, apt_id):
             # email().send
 
     return render(request, 'apartment/apartment_form.html', {'form': form})
+
+def apartment_show_and_modify(request):
+    apartment = Apartment.objects.get(pk=int(apt_id))
+    template_name='apartment/apartment_form.html'
+    form_class = ApartmentForm
+    success_url = '/apartment_list'
+
+    return render(request, 'apartment/apartment_form.html', {'form': form_class})
 
 
 @login_required
