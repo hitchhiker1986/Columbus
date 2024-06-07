@@ -80,7 +80,6 @@ def apartment_show_and_modify_old(request, apt_id):
     return render(request, 'apartment/apartment_form.html', {'form': form})
 
 def apartment_show_and_modify(request):
-    apartment = Apartment.objects.get(pk=int(apt_id))
     template_name='apartment/apartment_form.html'
     form_class = ApartmentForm
     success_url = '/apartment_list'
