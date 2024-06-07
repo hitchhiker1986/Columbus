@@ -46,26 +46,6 @@ def apartment_list(request):
     return render(request, 'apartment/apartment_list.html', {'apartments': apartments})
 
 
-"""
-@login_required
-def apartment_details(request, apt_id):
-    apartment = Apartment.objects.get(pk=apt_id)
-    form = ApartmentBaseDetailsForm(instance=apartment)
-    if request.method == 'POST':
-        form = ApartmentBaseDetailsForm(request.POST, instance=apartment)
-        if form.is_valid():
-            new_apartment = form.save(commit=False)
-            new_apartment.save()
-
-    return render(request, 'apartment/apartment_form.html', {'form': form})
-
-
-@login_required
-def apartment_base_view(request, apt_id):
-    apartment = Apartment.objects.get(pk=apt_id)
-
-    return render(request, 'apartment/apartment_base.html', {'apartment': apartment})
-"""
 @login_required
 def apartment_show_and_modify(request, apt_id):
     apartment = Apartment.objects.get(pk=int(apt_id))
@@ -85,13 +65,6 @@ def apartment_show_and_modify(request, apt_id):
         print(form.non_form_errors)
 
     return render(request, 'apartment/apartment_form.html', {'form': form})
-
-def apartment_show_and_modify_new(request):
-    template_name='apartment/apartment_form.html'
-    form_class = ApartmentForm
-    success_url = '/apartment_list'
-
-    return render(request, 'apartment/apartment_form.html', {'form': form_class})
 
 
 @login_required

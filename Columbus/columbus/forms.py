@@ -40,11 +40,6 @@ class TenantForm(forms.ModelForm):
         model = Tenant
         fields = ('__all__')
 
-class ApartmentForm_old(forms.ModelForm):
-    class Meta:
-        model = Apartment
-        fields = ('__all__')
-
 
 class NoFormTagCrispyFormMixin(object):
     @property
@@ -60,37 +55,7 @@ class ApartmentForm(forms.ModelForm):
     class Meta:
         model = Apartment
         fields = ('__all__')
-    """
-    address = forms.CharField(required=True, max_length=30)
-    zip = forms.IntegerField(required=True, initial=0)
-    district = forms.CharField(max_length=6, required=False)
-    topographical_nr = forms.CharField(max_length=20, required=False)
-    floor = forms.CharField(max_length=10, required=False)
-    city = forms.CharField(max_length=30, required=True)
-    owner = forms.ModelMultipleChoiceField(queryset=Owner.objects.all(), required=True)
-    tenant = forms.ModelMultipleChoiceField(queryset=Tenant.objects.all(), required=False)
-    size = forms.IntegerField(required=True, initial=0)
-    rooms = forms.IntegerField(required=True, initial=1)
-    halfrooms = forms.IntegerField(required=True)
-    balcony_size = forms.CharField(required=True, max_length=20)
-    furnished = forms.BooleanField(required=False)
-    is_active = forms.BooleanField(required=False)
-    price = forms.IntegerField(required=True)
-    currency = forms.ChoiceField(choices=[('EUR', 'Euro'), ('HUF', 'Forint'),], required=True, initial='HUF')
-    deposit = forms.IntegerField(required=False)
-    overhead = forms.IntegerField(required=False)
-    premiumPercentage = forms.IntegerField(required=True)
-    premium = forms.FloatField(required=True, initial=0)
-    next_check = forms.IntegerField(required=True, initial=1)
-    check_status = forms.BooleanField(required=True, initial=True)
-    last_check = forms.DateField(required=False)
-    # documents
-    sent_contract = forms.FileField(required=False)
-    signed_contract = forms.FileField(required=False)
-    leave_statement = forms.FileField(required=False)
-    takeover_checklist = forms.FileField(required=False)
-    child_acceptance_statement = forms.FileField(required=False)
-    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -108,6 +73,7 @@ class ApartmentForm(forms.ModelForm):
                     'rooms',
                     'halfrooms',
                     'balcony_size',
+                    'next_check',
                     'furnished',
                     'is_active',
                 ),
