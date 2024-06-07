@@ -67,7 +67,7 @@ def apartment_base_view(request, apt_id):
     return render(request, 'apartment/apartment_base.html', {'apartment': apartment})
 """
 @login_required
-def apartment_show_and_modify_old(request, apt_id):
+def apartment_show_and_modify(request, apt_id):
     apartment = Apartment.objects.get(pk=int(apt_id))
     form = ApartmentForm(instance=apartment)
     if request.method == 'POST':
@@ -79,7 +79,7 @@ def apartment_show_and_modify_old(request, apt_id):
 
     return render(request, 'apartment/apartment_form.html', {'form': form})
 
-def apartment_show_and_modify(request):
+def apartment_show_and_modify_new(request):
     template_name='apartment/apartment_form.html'
     form_class = ApartmentForm
     success_url = '/apartment_list'

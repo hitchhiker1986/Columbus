@@ -55,7 +55,12 @@ class NoFormTagCrispyFormMixin(object):
         return self._helper
 
 
-class ApartmentForm(forms.Form):
+class ApartmentForm(forms.ModelForm):
+
+    class Meta:
+        model = Apartment
+        fields = ('__all__')
+    """
     address = forms.CharField(required=True, max_length=30)
     zip = forms.IntegerField(required=True, initial=0)
     district = forms.CharField(max_length=6, required=False)
@@ -85,7 +90,7 @@ class ApartmentForm(forms.Form):
     leave_statement = forms.FileField(required=False)
     takeover_checklist = forms.FileField(required=False)
     child_acceptance_statement = forms.FileField(required=False)
-
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
