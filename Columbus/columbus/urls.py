@@ -5,6 +5,7 @@ app_name = 'columbus'
 urlpatterns = [
     path('home/', home, name='home'),
     path('logout/', logout, name='logout'),
+    path('changepw/', change_password, name='change_password'),
     path('apartment_list/', apartment_list, name='apartment_list'),
     path('owner_list/', owner_list, name='owner_list'),
     path('tenant_list/', tenant_list, name='tenant_list'),

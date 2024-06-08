@@ -1,7 +1,9 @@
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 from .models import *
 from .forms import *
 from django.core.mail import EmailMessage
@@ -19,13 +21,26 @@ Views for non-functional pages, like home, thanks etc
 def home(request):
     return render(request, 'home.html')
 
-def logout(request):
-    logout(request)
-
-    return redirect('/accounts/login')
+def logout(LogoutView):
+    pass
 
 def thanks(request):
     return render(request, 'thanks.html')
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Jelszó sikeresen megváltoztatva')
+            return redirect('home')
+        else:
+            message.error(request, 'Jelszóváltoztatás sikertelen')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/pwchange.html', {'form': form})
 
 """
 Views related to Apartment(s)

@@ -11,15 +11,15 @@
 
     <div class="task_container">
         <div class="task_child">
-            <h2>Aktív feladatok</h2>
+            <span>Aktív feladatok</span>
             {% for task in tasks %}
                 {% if task.status == 'Active' %}
                     <a href="/task_show/{{ task.id }}">
                         <div class="task_element">
                             <div class="task_title">
-                                <span>{{ task.title }} {{ task.status }}</span><br>
+                                <span>{{ task.title | truncatechars:20  }} {{ task.status }}</span><br>
                             </div>
-                            <span>{{ task.description }}</span><br>
+                            <span>{{ task.description  | truncatechars:40  }}</span><br>
                             <span>Felelös: {{ task.task_responsible }}</span> <br>
                             <span>Határidö: {{ task.end_day }}</span>
                         </div>
@@ -28,15 +28,15 @@
             {% endfor %}
         </div>
         <div class="task_child">
-            <h2>Folyamatban lévő feladatok</h2>
+            <span>Folyamatban lévő feladatok</span>
             {% for task in tasks %}
                 {% if task.status == 'In Progress' %}
                     <a href="/task_show/{{ task.id }}">
                         <div class="task_element">
                             <div class="task_title">
-                                <span>{{ task.title }} {{ task.status }}</span><br>
+                                <span>{{ task.title | truncatechars:20  }} {{ task.status }}</span><br>
                             </div>
-                            <span>{{ task.description }}</span><br>
+                            <span>{{ task.description  | truncatechars:40  }}</span><br>
                             <span>Felelös: {{ task.task_responsible }}</span> <br>
                             <span>Határidö: {{ task.end_day }}</span>
                         </div>
@@ -44,16 +44,35 @@
                 {% endif %}
             {% endfor %}
         </div>
+        {% if user.is_superuser %}
+            <div class="task_child">
+                <span>Kész fealdatok</span>
+                {% for task in tasks %}
+                    {% if task.status == 'Completed' %}
+                        <a href="/task_show/{{ task.id }}">
+                            <div class="task_element">
+                                <div class="task_title">
+                                    <span>{{ task.title | truncatechars:20  }} {{ task.status }}</span><br>
+                                </div>
+                                <span>{{ task.description  | truncatechars:40  }}</span><br>
+                                <span>Felelös: {{ task.task_responsible }}</span> <br>
+                                <span>Határidö: {{ task.end_day }}</span>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="task_child">
-            <h2>Lejárt feladatok</h2>
+            <span>Lejárt feladatok</span>
             {% for task in tasks %}
                 {% if task.status == 'Expired' %}
                     <a href="/task_show/{{ task.id }}">
                         <div class="task_element">
                             <div class="task_title">
-                                <span>{{ task.title }} {{ task.status }}</span><br>
+                                <span>{{ task.title | truncatechars:20 }} {{ task.status }}</span><br>
                             </div>
-                            <span>{{ task.description }}</span><br>
+                            <span>{{ task.description  | truncatechars:40  }}</span><br>
                             <span>Felelös: {{ task.task_responsible }}</span> <br>
                             <span>Határidö: {{ task.end_day }}</span>
                         </div>

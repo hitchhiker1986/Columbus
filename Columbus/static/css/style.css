@@ -4,13 +4,13 @@ input {
     border-bottom: 1px solid darkgrey;
 }
 
-.navbar {
+.navbar_old {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 5%;
-    background-color: #00134d;
+    background-color: #00134d; /* 007bfa -> a submit gomb szine*/
     color: white;
     padding: 10px;
     a:link {
@@ -26,10 +26,10 @@ input {
         color: white;
     }
 }
-.user {
+.user_old {
     float: left;
 }
-.links {
+.links_old {
     fload: right;
 }
 
@@ -68,7 +68,7 @@ form {
 
 .task_element {
     background-color: white;
-    width: 30em;
+    width: 80%;
     height: 10em;
     margin-bottom: 5px;
     margin-right: 5px;
@@ -105,4 +105,5 @@ form {
 
 .task_child {
     float: left;
+    width: 20%;
 }

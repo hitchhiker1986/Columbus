@@ -6,30 +6,35 @@
 {% if request.user.is_anonymous %}
 <span>You are not logged in!</span>
 {% endif %}
-<a href="/apartment_create/">Új bérlemény létrehozása</a>
 <h2 class="content-header">Lakások:</h2>
 {% if request.user.is_staff %}
-<table>
-    <tr>
-        <th>cim</th>
-        <th>Tulaj(ok)</th>
-        <th>Bérlő(k)</th>
-    </tr>
-    {% for apartment in apartments %}
-    <tr>
-        <td><a href="/apartment_show/{{ apartment.id }}">{{ apartment.address }}</a></td>
-        <td>
-            {% for owner in apartment.owner.all %}
-            <a href="/owner_show/{{ owner.id }}">{{ owner }}</a>
-            {% endfor %}
-        </td>
-        <td>
-            {% for tenant in apartment.tenant.all %}
-            <a href="/tenant_show/{{ tenant.id }}">{{ tenant }}</a><br>
-            {% endfor %}
-        </td>
-    </tr>
-    {%endfor%}
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">cim</th>
+            <th scope="col">Tulaj(ok)</th>
+            <th scope="col">Bérlő(k)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for apartment in apartments %}
+            <tr>
+                <td>
+                    <a href="/apartment_show/{{ apartment.id }}">{{ apartment.address }}</a>
+                </td>
+                <td>
+                    {% for owner in apartment.owner.all %}
+                        <a href="/owner_show/{{ owner.id }}">{{ owner }}</a>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for tenant in apartment.tenant.all %}
+                        <a href="/tenant_show/{{ tenant.id }}">{{ tenant }}</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 {% endif %}
