@@ -55,6 +55,33 @@ class ApartmentForm(forms.ModelForm):
     class Meta:
         model = Apartment
         fields = ('__all__')
+        labels = {'address':"Cím",
+                  'zip': "Irányítószám",
+                  'district': "Kerület",
+                  'topographical_nr': "Helyrajzi szám",
+                  'floor': "Emelet",
+                  'city': "Város",
+                  'Owner': "Tulajdonos",
+                  'tenant': "Bérlö",
+                  'size': "Alapterület",
+                  'rooms': "Szobaszám",
+                  'halfrooms': "Félszobák",
+                  'balcony_size: "Erkélyek (m2)",'
+                  'furnished': "Bútorozott",
+                  'is_active': "Aktív",
+                  'price': "Bérleti díj",
+                  'currency': "Pénznem",
+                  'deposit': "Kaució",
+                  'overhead': "Rezsi",
+                  'premiumPercentage': "Jutalék (%)",
+                  'premium': "Jutalék",
+                  'next_check': "Következö ellenörzés",
+                  'sent_contract': "Elküldött szerzödés",
+                  'signed_contract': "Aláírt szerzödés",
+                  'leave_statement': "Kiköltözési nyilatkozat",
+                  'takeover_checklist': "Átadási jegyzökönyv",
+                  'child_acceptance_statement': "Gyerekbefogadási nyilatkozat",
+                  }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
