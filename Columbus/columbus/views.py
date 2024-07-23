@@ -362,3 +362,8 @@ def task_create(request):
             new_task = form.save(commit=False)
             new_task.save()
     return render(request, 'tasks/task_form.html', {'form': form})
+
+
+#finances
+def cashout_form(request):
+    form = CashOutBillForm(request.POST)

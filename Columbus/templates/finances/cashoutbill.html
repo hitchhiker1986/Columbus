@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            {% crispy form %}
+        </div>
+
+        <input type="submit" value="Bizonylat létrehozása">
+    </form>
+{% endblock content %}

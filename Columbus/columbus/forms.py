@@ -3,6 +3,7 @@ from .models import *
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout
 from crispy_forms.bootstrap import Tab, TabHolder
+from django.forms import inlineformset_factory
 from django.db import models
 
 
@@ -143,3 +144,12 @@ class UtilityForm(forms.ModelForm):
     class Meta:
         model=Utility
         fields = ('__all__')
+
+
+# BillFormSet = inlineformset_factory(CashOutBill, Bill, fields=['bill_nr', 'amount'], can_delete=True, can_order=True)
+
+class CashOutBillForm(forms.ModelForm):
+    class Meta:
+        model = CashOutBill
+        fields = ('__all__')
+        # formset = BillFormSet(instance=CashOutBill)
