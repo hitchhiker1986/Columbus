@@ -4,9 +4,9 @@
     <form action="" method="post">
         {% csrf_token %}
         <div>
-            {{ form|crispy }}
+            {% crispy form %}
         </div>
 
-        <input type="submit" value="Tulaj aktualizálása">
+        <input type="submit" value="Bizonylat létrehozása">
     </form>
 {% endblock content %}

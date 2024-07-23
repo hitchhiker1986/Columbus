@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -5,34 +7,38 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 class Owner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=50, default="")
-    country = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    zip = models.CharField(max_length=4)
-    address = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
-    birth_name = models.CharField(max_length=50)
-    persID = models.CharField(max_length=20)
-    taxID = models.CharField(max_length=15)
-    iban = models.CharField(max_length=40)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=50, default="", blank=True)
+    owner_email = models.EmailField(blank=True)
+    country = models.CharField(max_length=50, blank=True)
+    city = models.CharField(max_length=50, blank=True)
+    zip = models.CharField(max_length=4, blank=True)
+    address = models.CharField(max_length=50, blank=True)
+    phone = models.CharField(max_length=15, blank=True)
+    birth_name = models.CharField(max_length=50, blank=True)
+    persID = models.CharField(max_length=20, blank=True)
+    taxID = models.CharField(max_length=15, blank=True)
+    iban = models.CharField(max_length=40, blank=True)
     is_company = models.BooleanField(default=False)
     active_owner = models.BooleanField(default=True)
+    registration_number = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Tenant(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, )
-    country = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    zip = models.CharField(max_length=4)
-    address = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
-    birth_name = models.CharField(max_length=50)
-    persID = models.CharField(max_length=20)
-    taxID = models.CharField(max_length=15)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, )
+    name = models.CharField(max_length=50, default="")
+    tenant_mail = models.EmailField(blank=True)
+    country = models.CharField(max_length=50, blank=True)
+    city = models.CharField(max_length=50, blank=True)
+    zip = models.CharField(max_length=4, blank=True)
+    address = models.CharField(max_length=50, blank=True)
+    phone = models.CharField(max_length=15, blank=True)
+    birth_name = models.CharField(max_length=50, blank=True)
+    persID = models.CharField(max_length=20, blank=True)
+    taxID = models.CharField(max_length=15, blank=True)
     is_company = models.BooleanField(default=False)
     active_tenant = models.BooleanField(default=True)
 
@@ -41,21 +47,21 @@ class Tenant(models.Model):
 
 
 class Apartment(models.Model):
-    address = models.CharField(max_length=30)
-    zip = models.IntegerField(blank=False, null=False, default=0)
-    district = models.CharField(max_length=6, default="")
+    address = models.CharField(max_length=30, blank=True)
+    zip = models.IntegerField(null=False, default=0, blank=True)
+    district = models.CharField(max_length=6, default="", blank=True)
     topographical_nr = models.CharField(max_length=20, blank=True)
     floor = models.CharField(max_length=10, blank=True)
-    city = models.CharField(max_length=30)
-    owner = models.ManyToManyField(Owner, related_name="apartment_owner")
-    tenant = models.ManyToManyField(Tenant, related_name="apartment_tenant")
-    size = models.IntegerField(blank=False, default=0)
-    rooms = models.IntegerField(blank=False, default=1)
-    halfrooms = models.IntegerField(blank=False, default=0)
-    balcony_size = models.CharField(blank=False, default="0", max_length=20)
-    furnished = models.BooleanField(default=False)
+    city = models.CharField(max_length=30, blank=True)
+    owner = models.ManyToManyField(Owner, related_name="apartment_owner", blank=True)
+    tenant = models.ManyToManyField(Tenant, related_name="apartment_tenant", blank=True)
+    size = models.IntegerField(default=0, blank=True)
+    rooms = models.IntegerField(default=1, blank=True)
+    halfrooms = models.IntegerField(default=0, blank=True)
+    balcony_size = models.CharField(default="0", max_length=20, blank=True)
+    furnished = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True)
-    price = models.PositiveIntegerField(default=0)
+    price = models.PositiveIntegerField(default=0, blank=True)
     currency = models.TextChoices('HUF', 'EUR')
     deposit = models.PositiveIntegerField(default=0)
     overhead = models.PositiveIntegerField(default=0)
@@ -64,9 +70,9 @@ class Apartment(models.Model):
     premium = models.FloatField(default=0,
                                 validators=[MinValueValidator(15000), MaxValueValidator(50000)])
     # utilities = models.ManyToManyField(Utility, blank=True)
-    next_check = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(12)])
-    check_status = models.BooleanField(default=True)
-    last_check = models.DateField(blank=True, null=True)
+    next_check = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(12)], blank=True)
+    check_status = models.BooleanField(default=True, blank=True)
+    last_check = models.DateField(null=True, blank=True)
     # documents
     sent_contract = models.FileField(upload_to='', blank=True, null=True)
     signed_contract = models.FileField(upload_to='Documents', blank=True, null=True)
@@ -184,3 +190,27 @@ class DictHistory(models.Model):
     @classmethod
     def update_value(self, value):
         self.dict_date = value
+
+class CashOutBill(models.Model):
+    buyer_name = models.CharField(max_length=30)
+    buyer_address = models.CharField(max_length=50)
+    amount = models.FloatField()
+    amount_written = models.CharField(max_length=50)
+    cashier = models.CharField(max_length=30)
+    creator = models.CharField(max_length=30)
+    date = models.DateField(auto_now_add=True)
+
+
+"""
+class Bill(models.Model):
+    cashout_bill = models.ForeignKey(CashOutBill,
+                                     on_delete=models.CASCADE,
+                                     related_name='cashout_bill',
+                                     null=True)
+    bill_nr = models.CharField(max_length=50)
+    amount = models.FloatField()
+
+"""
+
+
+

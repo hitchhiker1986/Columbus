@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import PermissionDenied
+# from django.core.exceptions.ValidationError import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -34,10 +35,11 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Jelszó sikeresen megváltoztatva')
+            #messages.success(request, 'Jelszó sikeresen megváltoztatva')
             return redirect('home')
         else:
-            message.error(request, 'Jelszóváltoztatás sikertelen')
+            pass
+            #messages.error(request, 'Jelszóváltoztatás sikertelen')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'registration/pwchange.html', {'form': form})
@@ -142,21 +144,24 @@ def owner_list(request):
 
     if request.user.groups.filter(name="Owners").exists():
         owners = Owner.objects.filter(user__username__contains=request.user)
-        for owner in owners:
-            print(owner.user)
+       # for owner in owners:
+           # print(owner.user)
 
     return render(request, "owner/owner_list.html", {'owners': owners})
 
 
 @login_required
 def owner_show_and_modify(request, owner_id):
-    owner = Owner.objects.get(pk=int(owner_id))
+    owner = Owner.objects.get(pk=owner_id)
     form = OwnerForm(instance=owner)
     if request.method == 'POST':
         form = OwnerForm(request.POST, instance=owner)
         if form.is_valid():
             new_owner = form.save(commit=False)
             new_owner.save()
+            return HttpResponseRedirect("/owner_list")
+        else:
+            print(form.errors)
             #email().send
 
     return render(request, 'owner/owner_form.html', {'form': form})
@@ -171,7 +176,6 @@ def owner_create(request):
             new_owner.save()
             return HttpResponseRedirect("/owner_list")
             #email().send
-
     return render(request, 'owner/owner_form.html', {'form': form})
 """
 Views related to Tenant(s)
@@ -183,12 +187,6 @@ def tenant_list(request):
     if request.user.is_staff:
         print("admin is logged in")
         tenants = Tenant.objects.all()
-
-    if request.user.groups.filter(name="Tenants").exists():
-        tenants = Tenant.objects.filter(user__username__contains=request.user)
-
-    for tenant in tenants:
-        print(tenant.user.username)
 
     return render(request, 'tenant/tenant_list.html', {'tenants': tenants})
 
@@ -362,3 +360,8 @@ def task_create(request):
             new_task = form.save(commit=False)
             new_task.save()
     return render(request, 'tasks/task_form.html', {'form': form})
+
+
+#finances
+def cashout_form(request):
+    form = CashOutBillForm(request.POST)

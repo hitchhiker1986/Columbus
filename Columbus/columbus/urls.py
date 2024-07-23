@@ -25,4 +25,5 @@ urlpatterns = [
     path('dict_years/', dict_years, name='dict_years'),
     path('dict_list/<int:year>', dict_list, name='dict_list'),
     path('dict/<int:util_id>', dict_view, name='dict'),
+    path('cashout_form/', cashout_form, name='cashout_form'),
 ]

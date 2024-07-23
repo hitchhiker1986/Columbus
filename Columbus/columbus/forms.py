@@ -1,9 +1,9 @@
 from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout
+from crispy_forms.layout import Submit, Layout, Field
 from crispy_forms.bootstrap import Tab, TabHolder
-from django.db import models
+from django.forms import inlineformset_factory
 
 
 class ChangePasswordForm(forms.Form):
@@ -34,15 +34,21 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ('__all__')
 
-    widgets = {
-        'start_day': forms.DateInput(),
-        'end_day': forms.DateInput(),
-    }
+
+        widgets = {
+            'start_day': forms.DateInput(attrs={'type': 'date'}),
+            'end_day': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 
 class TenantForm(forms.ModelForm):
     class Meta:
         model = Tenant
+        fields = ('__all__')
+
+class OwnerForm(forms.ModelForm):
+    class Meta:
+        model = Owner
         fields = ('__all__')
 
 
@@ -133,13 +139,17 @@ class ApartmentForm(forms.ModelForm):
         )
         self.helper.layout.append(Submit('submit', 'Submit'))
 
-class OwnerForm(forms.ModelForm):
-    class Meta:
-        model = Owner
-        fields = ('__all__')
-
 
 class UtilityForm(forms.ModelForm):
     class Meta:
         model=Utility
         fields = ('__all__')
+
+
+# BillFormSet = inlineformset_factory(CashOutBill, Bill, fields=['bill_nr', 'amount'], can_delete=True, can_order=True)
+
+class CashOutBillForm(forms.ModelForm):
+    class Meta:
+        model = CashOutBill
+        fields = ('__all__')
+        # formset = BillFormSet(instance=CashOutBill)

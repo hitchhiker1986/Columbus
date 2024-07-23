@@ -55,5 +55,4 @@ class Command(BaseCommand):
                 User.objects.get(username="admin").email,
                 {task.task_responsible.email},
                 )
-
                 email.send()
