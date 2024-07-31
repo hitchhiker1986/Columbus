@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field
+from crispy_forms.layout import Submit, Layout, Field, Div, MultiField
 from crispy_forms.bootstrap import Tab, TabHolder
 from django.forms import inlineformset_factory
 
@@ -50,7 +50,58 @@ class OwnerForm(forms.ModelForm):
     class Meta:
         model = Owner
         fields = ('__all__')
+        labels = {
+            'name': "Név",
+            'owner_email': "E-mail cím",
+            'country': "Ország",
+            'city': "Város",
+            'zip': "Irányítószám",
+            'address': "Cím",
+            'phone': "Telefonszám",
+            'birth_name': "Születési név",
+            'persID': "Személyigazolvány szám",
+            'taxID': "Adószám",
+            'iban': "Bankszámlaszám",
+            'is_company': "Cég",
+            'active_owner': "Aktív",
+            'owner_company_registration_number': "Cégjegyzékszám",
+            'owner_company_tax_nr': "Cég adószáma",
+            'owner_company_contact_name': "Kapcsolattartó neve",
+            'owner_company_contact_phone': "Kapcsolattartó telefonszáma",
+            'owner_company_contact_email': "Kapcsolattartó E-mail címe",
+        }
 
+    def init(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            MultiField(
+                Div(
+                    'name',
+                    'owner_email',
+                    'country',
+                    'city',
+                    'zip',
+                    'address',
+                    'phone',
+                    'birth_name',
+                    'persID',
+                    'taxID',
+                    'iban',
+                    'is_company',
+                    'active_owner',
+                    id = 'default_div'
+                ),
+        Div(
+            'owner_company_registration_number',
+                  'owner_company_tax_nr',
+                  'owner_company_contact_name',
+                  'owner_company_contact_phone',
+                  'owner_company_contact_email',
+                  id = 'company_div'
+                )
+            )
+        )
 
 class NoFormTagCrispyFormMixin(object):
     @property

@@ -21,7 +21,12 @@ class Owner(models.Model):
     iban = models.CharField(max_length=40, blank=True)
     is_company = models.BooleanField(default=False)
     active_owner = models.BooleanField(default=True)
-    registration_number = models.CharField(max_length=30, blank=True)
+    owner_company_registration_number = models.CharField(max_length=30, blank=True)
+    owner_company_tax_nr = models.CharField(max_length=15, blank=True)
+    owner_company_contact_name = models.CharField(max_length=50, blank=True)
+    owner_company_contact_phone = models.CharField(max_length=15, blank=True)
+    owner_company_contact_email = models.EmailField(blank=True)
+
 
     def __str__(self):
         return self.name
