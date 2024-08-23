@@ -157,6 +157,12 @@ def owner_show_and_modify(request, owner_id):
     if request.method == 'POST':
         form = OwnerForm(request.POST, instance=owner)
         if form.is_valid():
+            if not owner.is_company:
+                owner.owner_company_registration_number = ""
+                owner.owner_company_tax_nr = ""
+                owner.owner_company_contact_name = ""
+                owner.owner_company_contact_phone = ""
+                owner.owner_company_contact_email = ""
             new_owner = form.save(commit=False)
             new_owner.save()
             return HttpResponseRedirect("/owner_list")
@@ -345,6 +351,7 @@ def task_show_and_modify(request, task_id):
                 admin = User.objects.get(username='columbusadmin')
                 new_task.task_responsible = admin
             new_task.save()
+            return HttpResponseRedirect("/task_list")
             #email().send
     else:
         form = TaskForm(instance=task)
