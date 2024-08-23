@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field, Div, MultiField
+from crispy_forms.layout import Submit, Layout, Div
 from crispy_forms.bootstrap import Tab, TabHolder
 from django.forms import inlineformset_factory
 
@@ -75,7 +75,7 @@ class OwnerForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            MultiField(
+            Div(
                 Div(
                     'name',
                     'owner_email',
@@ -90,16 +90,17 @@ class OwnerForm(forms.ModelForm):
                     'iban',
                     'is_company',
                     'active_owner',
-                    id = 'default_div'
+                    css_class = 'default_div'
                 ),
-        Div(
-            'owner_company_registration_number',
-                  'owner_company_tax_nr',
-                  'owner_company_contact_name',
-                  'owner_company_contact_phone',
-                  'owner_company_contact_email',
-                  id = 'company_div'
-                )
+                Div(
+                    'owner_company_registration_number',
+                    'owner_company_tax_nr',
+                    'owner_company_contact_name',
+                    'owner_company_contact_phone',
+                    'owner_company_contact_email',
+                    css_class = 'company_div'
+                ),
+                css_class = 'owners_div'
             )
         )
 
