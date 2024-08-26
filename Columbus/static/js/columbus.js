@@ -5,9 +5,6 @@ let div_id_owner_company_contact_name = document.getElementById('div_id_owner_co
 let div_id_owner_company_contact_phone = document.getElementById('div_id_owner_company_contact_phone');
 let div_id_owner_company_contact_email = document.getElementById('div_id_owner_company_contact_email');
 
-console.log(document.getElemetsByClass("company_div"));
-
-
 if(is_company.checked) {
     //div_id_registration_number.style.display = "block";
     div_id_owner_company_registration_number.style.display = "block";
