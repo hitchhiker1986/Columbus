@@ -47,6 +47,7 @@ class Tenant(models.Model):
     taxID = models.CharField(max_length=15, blank=True)
     is_company = models.BooleanField(default=False)
     active_tenant = models.BooleanField(default=True)
+    gets_invoice = models.BooleanField(default=True)
 
     def __str__(self):
         return self.birth_name
