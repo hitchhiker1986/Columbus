@@ -143,12 +143,12 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "/home/"
-# LOGOUT_REDIRECT_URL = 'accounts/login'
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = 587
+EMAIL_PORT = 587 #Elesben 465
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

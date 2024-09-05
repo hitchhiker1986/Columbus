@@ -206,3 +206,32 @@ class CashOutBillForm(forms.ModelForm):
         model = CashOutBill
         fields = ('__all__')
         # formset = BillFormSet(instance=CashOutBill)
+
+
+class CostForm(forms.ModelForm):
+    class Meta:
+        model = Cost
+        fields = (
+            'name',
+            'amount',
+            'bill_number',
+            'deadline',
+            'day_of_auto_creation',
+            'who_pays_email',
+            'is_fixed_price',
+            'is_one_time_payment',
+            'is_open',
+        )
+        labels = {
+            'name': 'Elnevezés',
+            'amount': 'Összeg',
+            'bill_number': "Számla sorszáma",
+            'deadline': 'Határidö',
+            'day_of_auto_creation': 'Automatikus létrehozás napja (Minden hónap adott napja)',
+            'who_pays_email': 'Fizetö e-mail címe',
+            'is_fixed_price': 'Fix összeg',
+            'is_one_time_payment': 'Egyszeri',
+            'is_open': 'Nyitott tétel',
+        }
+
+        #https://micropyramid.com/blog/how-to-use-nested-formsets-in-django!!!

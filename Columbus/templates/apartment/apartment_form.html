@@ -6,6 +6,7 @@
     <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
 {% endblock head_css_site %}
 {% block content %}
+    <span>Lakás id-ja: {{ apartment.id }}</span>
     <form action="" method="post">
         {% csrf_token %}
         <div>

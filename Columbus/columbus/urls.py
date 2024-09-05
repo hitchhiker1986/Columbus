@@ -4,7 +4,7 @@ from columbus.views import *
 app_name = 'columbus'
 urlpatterns = [
     path('home/', home, name='home'),
-    path('logout/', logout, name='logout'),
+    path('logout/', logout_view, name='logout'),
     path('changepw/', change_password, name='change_password'),
     path('apartment_list/', apartment_list, name='apartment_list'),
     path('owner_list/', owner_list, name='owner_list'),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('dict_list/<int:year>', dict_list, name='dict_list'),
     path('dict/<int:util_id>', dict_view, name='dict'),
     path('cashout_form/', cashout_form, name='cashout_form'),
+    path('cost_create/<int:apt_id>/', cost_create, name='cost_creation_form'),
 ]

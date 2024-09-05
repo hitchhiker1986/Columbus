@@ -47,6 +47,7 @@ class Tenant(models.Model):
     taxID = models.CharField(max_length=15, blank=True)
     is_company = models.BooleanField(default=False)
     active_tenant = models.BooleanField(default=True)
+    gets_invoice = models.BooleanField(default=True)
 
     def __str__(self):
         return self.birth_name
@@ -97,6 +98,27 @@ class Apartment(models.Model):
             return 15000
         else:
             return calculated
+
+class Cost(models.Model):
+    related_apartment = models.ForeignKey(
+        Apartment,
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(max_length=20, blank=True)
+    bill_number = models.CharField(max_length=30, blank=True)
+    amount = models.FloatField(default=0)
+    deadline = models.DateField()
+    day_of_auto_creation = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(31)], blank=True)
+    who_pays_email = models.EmailField(blank=True)
+    is_fixed_price = models.BooleanField(default=False)
+    is_one_time_payment = models.BooleanField(default=True, blank=True)
+    is_open = models.BooleanField(default=True, blank=True)
+
+
+
+
+
+
 
 
 class Utility(models.Model):

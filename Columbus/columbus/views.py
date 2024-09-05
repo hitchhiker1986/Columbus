@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from .models import *
 from .forms import *
-from django.core.mail import EmailMessage
+from django.core.mail import send_mail, EmailMessage
+from django.core.mail import get_connection
 from django.core import management
 from datetime import datetime
 from django.contrib.auth import logout
@@ -22,8 +23,10 @@ Views for non-functional pages, like home, thanks etc
 def home(request):
     return render(request, 'home.html')
 
-def logout(LogoutView):
-    pass
+def logout_view(request):
+    logout(request)
+    return (render(request, 'home.html'))
+
 
 def thanks(request):
     return render(request, 'thanks.html')
@@ -81,7 +84,7 @@ def apartment_show_and_modify(request, apt_id):
         print(form.non_field_errors)
         print(form.non_form_errors)
 
-    return render(request, 'apartment/apartment_form.html', {'form': form})
+    return render(request, 'apartment/apartment_form.html', {'form': form, 'apartment': apartment})
 
 
 @login_required
@@ -351,8 +354,14 @@ def task_show_and_modify(request, task_id):
                 admin = User.objects.get(username='columbusadmin')
                 new_task.task_responsible = admin
             new_task.save()
+            email = EmailMessage(
+                subject=str(new_task.id) + ' számú feladat módosítva',
+                body="Feladat módosítva",
+                to=[new_task.task_responsible.email],
+                from_email=User.objects.get(username='columbusadmin').email
+            )
+            email.send()
             return HttpResponseRedirect("/task_list")
-            #email().send
     else:
         form = TaskForm(instance=task)
 
@@ -366,9 +375,30 @@ def task_create(request):
         if form.is_valid():
             new_task = form.save(commit=False)
             new_task.save()
+            email = EmailMessage(
+                subject=str(new_task.id) + ' számú feladat létrehozva',
+                body="Új feladatot hoztam létre " + str(new_task.id) + " sorszámmal.",
+                to=[new_task.task_responsible.email],
+                from_email=User.objects.get(username='columbusadmin').email
+            )
+            email.send()
     return render(request, 'tasks/task_form.html', {'form': form})
 
 
 #finances
 def cashout_form(request):
     form = CashOutBillForm(request.POST)
+
+
+def cost_create(request, apt_id):
+    apartment = Apartment.objects.get(id=apt_id)
+    form = CostForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_cost = form.save(commit=False)
+            new_cost.apartment = apartment
+            new_cost.save()
+            return HttpResponseRedirect("/home")
+
+    return render(request, 'finances/cost_form.html', {'form': form})
+
