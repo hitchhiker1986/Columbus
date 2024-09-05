@@ -64,6 +64,7 @@ class OwnerForm(forms.ModelForm):
             'iban': "Bankszámlaszám",
             'is_company': "Cég",
             'active_owner': "Aktív",
+            'gets_invoice': "Számlát kap",
             'owner_company_registration_number': "Cégjegyzékszám",
             'owner_company_tax_nr': "Cég adószáma",
             'owner_company_contact_name': "Kapcsolattartó neve",
