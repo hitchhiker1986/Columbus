@@ -375,12 +375,15 @@ def task_create(request):
         if form.is_valid():
             new_task = form.save(commit=False)
             new_task.save()
+            print('ide belep?')
             email = EmailMessage(
                 subject=str(new_task.id) + ' számú feladat létrehozva',
                 body="Új feladatot hoztam létre " + str(new_task.id) + " sorszámmal.",
                 to=[new_task.task_responsible.email],
                 from_email=User.objects.get(username='columbusadmin').email
             )
+            print("to: " + email.to + "from: " + email.from_email)
+
             email.send()
             return HttpResponseRedirect("/task_list")
     return render(request, 'tasks/task_form.html', {'form': form})
