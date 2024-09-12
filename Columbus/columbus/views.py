@@ -360,7 +360,7 @@ def task_show_and_modify(request, task_id):
                 to=[new_task.task_responsible.email],
                 from_email=User.objects.get(username='columbusadmin').email
             )
-            email.send()
+            # email.send()
             return HttpResponseRedirect("/task_list")
     else:
         form = TaskForm(instance=task)
@@ -382,7 +382,7 @@ def task_create(request):
                 to=[new_task.task_responsible.email],
                 from_email=User.objects.get(username='columbusadmin').email
             )
-            email.send()
+            # email.send()
             return HttpResponseRedirect("/task_list")
     else:
         form = TaskForm(request.POST)
