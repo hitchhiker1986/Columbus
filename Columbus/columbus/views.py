@@ -383,6 +383,7 @@ def task_create(request):
             )
             email.send()
             return HttpResponseRedirect("/task_list")
+
     return render(request, 'tasks/task_form.html', {'form': form})
 
 
