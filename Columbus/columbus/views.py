@@ -382,8 +382,6 @@ def task_create(request):
                 to=[new_task.task_responsible.email],
                 from_email=User.objects.get(username='columbusadmin').email
             )
-            print("to: " + email.to + "from: " + email.from_email)
-
             email.send()
             return HttpResponseRedirect("/task_list")
 
