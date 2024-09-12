@@ -382,6 +382,7 @@ def task_create(request):
                 from_email=User.objects.get(username='columbusadmin').email
             )
             email.send()
+            return HttpResponseRedirect("/task_list")
     return render(request, 'tasks/task_form.html', {'form': form})
 
 
