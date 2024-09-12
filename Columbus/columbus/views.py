@@ -375,7 +375,7 @@ def task_create(request):
         if form.is_valid():
             new_task = form.save(commit=False)
             new_task.save()
-            print('ide belep?')
+            print(User.objects.get(username='columbusadmin').email)
             email = EmailMessage(
                 subject=str(new_task.id) + ' számú feladat létrehozva',
                 body="Új feladatot hoztam létre " + str(new_task.id) + " sorszámmal.",
@@ -384,6 +384,8 @@ def task_create(request):
             )
             email.send()
             return HttpResponseRedirect("/task_list")
+    else:
+        form = TaskForm(request.POST)
 
     return render(request, 'tasks/task_form.html', {'form': form})
 
