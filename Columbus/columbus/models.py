@@ -192,8 +192,8 @@ class Task(models.Model):
     # status ami alapjan kiertekelodik hogy kihez milyen gyakran kell menni (problemas-e)
     start_day = models.DateField()
     end_day = models.DateField()
-    description = models.TextField(max_length=500,)
     title = models.TextField(max_length=50, )
+    description = models.TextField(max_length=500,)
     task_responsible = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
