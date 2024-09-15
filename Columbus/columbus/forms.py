@@ -33,6 +33,14 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ('__all__')
+        labels = {
+            'start_day': 'Kezdés napja',
+            'end_day': 'Határidő',
+            'title': 'Cím',
+            'description': 'Feladat leírása',
+            'task_responsible': 'Felelős',
+            'status': 'Státusz'
+        }
 
 
         widgets = {
