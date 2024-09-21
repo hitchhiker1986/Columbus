@@ -28,7 +28,7 @@ class SentContractForm(forms.ModelForm):
         model = Apartment
         fields = ('sent_contract', )
 
-
+#this is a test comment
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
